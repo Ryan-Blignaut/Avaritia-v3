@@ -19,7 +19,7 @@ import net.minecraft.util.GsonHelper;
 import net.minecraftforge.client.ForgeRenderTypes;
 import net.minecraftforge.client.model.*;
 import net.minecraftforge.client.model.geometry.IModelGeometry;
-import thesilverecho.avaritia.client.model.ShaderWrappedRenderLayer;
+import thesilverecho.avaritia.client.render_layer.TestLayer;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -47,7 +47,7 @@ public class CosmicModelGeometry implements IModelGeometry<CosmicModelGeometry>
 
 	public static RenderType getLayerRenderType(boolean isOverlay)
 	{
-		return isOverlay ? new ShaderWrappedRenderLayer(ForgeRenderTypes.ITEM_UNSORTED_UNLIT_TRANSLUCENT.get()/*, CosmicShader.COSMIC_SHADER*/) : ForgeRenderTypes.ITEM_UNSORTED_TRANSLUCENT.get();
+		return isOverlay ? /*new ShaderWrappedRenderLayer(ForgeRenderTypes.ITEM_UNSORTED_UNLIT_TRANSLUCENT.get()*//*, CosmicShader.COSMIC_SHADER*//*)*/new TestLayer(ForgeRenderTypes.ITEM_UNSORTED_UNLIT_TRANSLUCENT.get()) : ForgeRenderTypes.ITEM_UNSORTED_UNLIT_TRANSLUCENT.get();
 	}
 
 
@@ -63,9 +63,6 @@ public class CosmicModelGeometry implements IModelGeometry<CosmicModelGeometry>
 		for (int i = 0; i < textures.size(); i++)
 		{
 			TextureAtlasSprite tas = spriteGetter.apply(textures.get(i));
-
-			System.out.println(tas.getX());
-			System.out.println(tas.getY());
 
 			RenderType rt = getLayerRenderType(overlayLayers.contains(i));
 			builder.addQuads(rt, ItemLayerModel.getQuadsForSprite(i, tas, transform, true));
