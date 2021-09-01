@@ -7,9 +7,9 @@ import net.minecraft.server.packs.resources.ResourceProvider;
 
 import java.io.IOException;
 
-public class TestShader extends ShaderInstance
+public class CosmicShader extends ShaderInstance
 {
-	public TestShader(ResourceProvider resourceProvider, ResourceLocation shaderLocation, VertexFormat vertexFormat) throws IOException
+	public CosmicShader(ResourceProvider resourceProvider, ResourceLocation shaderLocation, VertexFormat vertexFormat) throws IOException
 	{
 		super(resourceProvider, shaderLocation, vertexFormat);
 	}

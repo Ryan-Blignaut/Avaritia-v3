@@ -5,7 +5,7 @@
     "layer0": "avaritia:item/infinity_sword",
     "layer1": "avaritia:item/infinity_sword_overlay"
   },
-  "fullbright_layers": [
-    0
+  "overlay_layers": [
+    1
   ]
 }

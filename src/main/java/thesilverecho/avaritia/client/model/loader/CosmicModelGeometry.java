@@ -7,8 +7,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
+import com.mojang.math.Matrix4f;
 import com.mojang.math.Transformation;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -19,7 +21,7 @@ import net.minecraft.util.GsonHelper;
 import net.minecraftforge.client.ForgeRenderTypes;
 import net.minecraftforge.client.model.*;
 import net.minecraftforge.client.model.geometry.IModelGeometry;
-import thesilverecho.avaritia.client.render_layer.TestLayer;
+import thesilverecho.avaritia.client.render_layer.ModRenderLayers;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -47,7 +49,7 @@ public class CosmicModelGeometry implements IModelGeometry<CosmicModelGeometry>
 
 	public static RenderType getLayerRenderType(boolean isOverlay)
 	{
-		return isOverlay ? /*new ShaderWrappedRenderLayer(ForgeRenderTypes.ITEM_UNSORTED_UNLIT_TRANSLUCENT.get()*//*, CosmicShader.COSMIC_SHADER*//*)*/new TestLayer(ForgeRenderTypes.ITEM_UNSORTED_UNLIT_TRANSLUCENT.get()) : ForgeRenderTypes.ITEM_UNSORTED_UNLIT_TRANSLUCENT.get();
+		return isOverlay ? ModRenderLayers.getUnsortedTranslucent() : ForgeRenderTypes.ITEM_UNSORTED_TRANSLUCENT.get();
 	}
 
 
@@ -55,39 +57,41 @@ public class CosmicModelGeometry implements IModelGeometry<CosmicModelGeometry>
 	public BakedModel bake(IModelConfiguration owner, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ItemOverrides overrides, ResourceLocation modelLocation)
 	{
 		final ImmutableMap<ItemTransforms.TransformType, Transformation> transformMap = PerspectiveMapWrapper.getTransforms(new CompositeModelState(owner.getCombinedTransform(), modelTransform));
-		final Transformation transform = modelTransform.getRotation();
 		final TextureAtlasSprite particle = spriteGetter.apply(owner.isTexturePresent("particle") ? owner.resolveTexture("particle") : textures.get(0));
+		final ItemMultiLayerBakedModel.Builder builder = ItemMultiLayerBakedModel.builder(owner, particle, overrides, transformMap);
 
-		ItemMultiLayerBakedModel.Builder builder = ItemMultiLayerBakedModel.builder(owner, particle, overrides, transformMap);
-
+		final Transformation transform = modelTransform.getRotation();
 		for (int i = 0; i < textures.size(); i++)
 		{
 			TextureAtlasSprite tas = spriteGetter.apply(textures.get(i));
-
-			RenderType rt = getLayerRenderType(overlayLayers.contains(i));
-			builder.addQuads(rt, ItemLayerModel.getQuadsForSprite(i, tas, transform, true));
+			final boolean isOverlayLayer = overlayLayers.contains(i);
+			final RenderType rt = getLayerRenderType(isOverlayLayer);
+			final ImmutableList<BakedQuad> quadsForSprite = getQuadsForSprite(isOverlayLayer, i, tas, transform);
+			builder.addQuads(rt, quadsForSprite);
 		}
 
 		return builder.build();
 	}
-
-	/*@Override
-	public BakedModel bake(IModelConfiguration owner, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelTransform, ItemOverrides overrides, ResourceLocation modelLocation)
+	private float test =0.8999f;
+	private ImmutableList<BakedQuad> getQuadsForSprite(boolean overlayLayer, int i, TextureAtlasSprite tas, Transformation transform)
 	{
-		final ImmutableMap<ItemTransforms.TransformType, Transformation> transforms = PerspectiveMapWrapper.getTransforms(new CompositeModelState(owner.getCombinedTransform(), modelTransform));
-		final Transformation transform = modelTransform.getRotation();
-		final TextureAtlasSprite particle = spriteGetter.apply(owner.isTexturePresent("particle") ? owner.resolveTexture("particle") : textures.get(0));
-		final ItemMultiLayerBakedModelWrapper2.CustomBuilder builder = ItemMultiLayerBakedModelWrapper2.builder1(owner, particle, overrides, transforms);
-//		ItemMultiLayerBakedModelWrapper.Builder builder = ItemMultiLayerBakedModelWrapper.builder(owner, particle, overrides, transformMap);
-		for (int i = 0; i < textures.size(); i++)
+		if (!overlayLayer)
 		{
-			TextureAtlasSprite tas = spriteGetter.apply(textures.get(i));
-			RenderType rt = getLayerRenderType(overlayLayers.contains(i));
-			builder.addQuads(rt, ItemLayerModel.getQuadsForSprite(i, tas, transform, false));
+			final Matrix4f matrix = transform.getMatrix();
+			final float v = test / 2f - 1;
+			matrix.setTranslation(-v, -v, -v);
+			matrix.multiply(test);
+			final Transformation compose = new Transformation(matrix);
+			return ItemLayerModel.getQuadsForSprite(i, tas, compose, false);
+		} else
+		{
+			return ItemLayerModel.getQuadsForSprite(i, tas, transform, false);
+//			Add a little offset to try and prevent z-fighting.
+			//			matrix.multiplyWithTranslation(-0.1f, 0.1f, -0.1f);
+//			matrix.multiply(Matrix4f.createScaleMatrix(1.1f,1.1f,1.1f));
+//			matrix.add(Matrix4f.createScaleMatrix(1.1f,1.1f,1.1f));
 		}
-
-		return builder.build();
-	}*/
+	}
 
 	@Override
 	public Collection<Material> getTextures(IModelConfiguration owner, Function<ResourceLocation, UnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors)
