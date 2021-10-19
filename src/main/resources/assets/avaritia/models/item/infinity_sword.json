@@ -1,5 +1,5 @@
 {
-  "loader": "avaritia:super",
+  "loader": "avaritia:layered",
   "parent": "item/handheld",
   "textures": {
     "layer0": "avaritia:item/infinity_sword",

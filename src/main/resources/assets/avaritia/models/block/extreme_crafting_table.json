@@ -2,7 +2,7 @@
   "parent": "block/block",
   "loader": "forge:obj",
   "flip-v": true,
-  "model": "avaritia:models/block/bb1.obj",
+  "model": "avaritia:models/block/test.obj",
   "textures": {
     "default": "avaritia:block/bench",
     "particle": "#default"

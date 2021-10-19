@@ -1,6 +1,9 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "avaritia:item/extreme_ingot"
+  "loader": "avaritia:inner-model",
+  "parent": "avaritia:item/extreme_ingot_original",
+  "pulse": true,
+  "background": {
+    "texture": "avaritia:halo/halo128",
+    "size": 10
   }
 }

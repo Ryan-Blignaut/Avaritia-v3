@@ -12,6 +12,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import thesilverecho.avaritia.common.container.ExtremeCraftingTableContainer;
 import thesilverecho.avaritia.common.init.ModTiles;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class ExtremeCraftingTableTile extends BasicItemStorageTile implements MenuProvider
@@ -24,7 +25,6 @@ public class ExtremeCraftingTableTile extends BasicItemStorageTile implements Me
 			setChanged();
 		}
 	};
-//	private CompactorRecipe recipe;
 
 
 	public ExtremeCraftingTableTile(BlockPos blockPos, BlockState blockState)
@@ -32,12 +32,14 @@ public class ExtremeCraftingTableTile extends BasicItemStorageTile implements Me
 		super(ModTiles.EXTREME_CRAFTING_TABLE_TILE.get(), blockPos, blockState);
 	}
 
+	@Nonnull
 	@Override
 	public ItemStackHandler getInventory()
 	{
 		return handler;
 	}
 
+	@Nonnull
 	@Override
 	public Component getDisplayName()
 	{

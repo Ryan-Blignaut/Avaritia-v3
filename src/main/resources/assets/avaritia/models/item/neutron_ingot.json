@@ -1,6 +1,6 @@
 {
   "loader": "avaritia:inner-model",
-  "parent": "avaritia:item/neutron_pile_original",
+  "parent": "avaritia:item/neutron_ingot_original",
   "pulse": false,
   "background": {
     "texture": "avaritia:halo/halo_noise",

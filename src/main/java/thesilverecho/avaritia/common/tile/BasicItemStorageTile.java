@@ -18,19 +18,17 @@ import javax.annotation.Nullable;
 
 public abstract class BasicItemStorageTile extends BlockEntity
 {
+	//	Capabilities-> Items, Energy, Fluids, Generic.
+//	ArrayList<LazyOptional<? extends INBTSerializable>> optionals = new ArrayList<>();
 	protected final LazyOptional<IItemHandler> inventory = LazyOptional.of(this::getInventory);
+
+	@Nonnull
+	public abstract ItemStackHandler getInventory();
 
 	public BasicItemStorageTile(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
 		super(type, pos, state);
 	}
-
-//	public BasicItemStorageTile(BlockEntityType<?> tileEntityTypeIn)
-//	{
-//		super(tileEntityTypeIn);
-//	}
-
-	public abstract ItemStackHandler getInventory();
 
 	protected boolean isWithinUsableDistance(Player player)
 	{
@@ -41,6 +39,10 @@ public abstract class BasicItemStorageTile extends BlockEntity
 	public CompoundTag save(CompoundTag tag)
 	{
 		final CompoundTag save = super.save(tag);
+//		optionals.forEach(lazyOptional ->
+//		{
+//			save.put("test", lazyOptional.resolve().get().serializeNBT());
+//		});
 		save.put("storage", getInventory().serializeNBT());
 		return save;
 	}
@@ -59,6 +61,7 @@ public abstract class BasicItemStorageTile extends BlockEntity
 	{
 		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.orEmpty(cap, this.inventory);
+
 		return super.getCapability(cap, side);
 	}
 
@@ -66,6 +69,7 @@ public abstract class BasicItemStorageTile extends BlockEntity
 	public void setRemoved()
 	{
 		super.setRemoved();
+//		optionals.forEach(LazyOptional::invalidate);
 		inventory.invalidate();
 	}
 }

@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Transformation;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
@@ -72,26 +73,38 @@ public class CosmicModelGeometry implements IModelGeometry<CosmicModelGeometry>
 
 		return builder.build();
 	}
-	private float test =0.8999f;
+
 	private ImmutableList<BakedQuad> getQuadsForSprite(boolean overlayLayer, int i, TextureAtlasSprite tas, Transformation transform)
 	{
+
+//		transform.getScale().mul(0.1f);
+		transform.getScale().add(32, 32, 32);
+		transform.applyOrigin(new Vector3f(1, 3, 1));
+		final Matrix4f matrix = transform.getMatrix();
 		if (!overlayLayer)
 		{
-			final Matrix4f matrix = transform.getMatrix();
-			final float v = test / 2f - 1;
-			matrix.setTranslation(-v, -v, -v);
-			matrix.multiply(test);
-			final Transformation compose = new Transformation(matrix);
-			return ItemLayerModel.getQuadsForSprite(i, tas, compose, false);
+//			matrix.multiply(0.95f);
 		} else
 		{
-			return ItemLayerModel.getQuadsForSprite(i, tas, transform, false);
 //			Add a little offset to try and prevent z-fighting.
+			final float v = 0.009f / 2f;
+
+//			matrix.multiplyWithTranslation(0.0005f, 0.0001f, 0.0001f);
+//			matrix.translate(new Vector3f(-0.004f, -0.0041f, 0));
+
+//			matrix.setTranslation(-v, -v, -v);
+//			matrix.setTranslation(-0.100f, -0.100f, -0.100f);
+//			matrix.multiplyWithTranslation(-.200f, -.200f, -.200f);
+//			matrix.multiplyWithTranslation(-.1f / 2, -.1f / 2, -.1f / 2);
+//			matrix.multiply(1.1f);
+//			matrix.multiply(new Matrix4f(new Quaternion(1,1,1,1)));
 			//			matrix.multiplyWithTranslation(-0.1f, 0.1f, -0.1f);
 //			matrix.multiply(Matrix4f.createScaleMatrix(1.1f,1.1f,1.1f));
 //			matrix.add(Matrix4f.createScaleMatrix(1.1f,1.1f,1.1f));
 		}
+		return ItemLayerModel.getQuadsForSprite(i, tas, new Transformation(matrix)/*transform*/, false);
 	}
+
 
 	@Override
 	public Collection<Material> getTextures(IModelConfiguration owner, Function<ResourceLocation, UnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors)
@@ -99,6 +112,7 @@ public class CosmicModelGeometry implements IModelGeometry<CosmicModelGeometry>
 		this.textures = getTextures(owner);
 		return textures;
 	}
+
 
 	public static class Loader implements IModelLoader<CosmicModelGeometry>
 	{
