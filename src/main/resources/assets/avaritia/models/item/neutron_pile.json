@@ -1,5 +1,5 @@
 {
-  "loader": "avaritia:inner-model",
+  "loader": "avaritia:extreme",
   "parent": "avaritia:item/neutron_pile_original",
   "pulse": false,
   "background": {

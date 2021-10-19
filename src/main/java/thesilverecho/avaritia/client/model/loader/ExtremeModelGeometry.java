@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
-public class InnerModelGeometry implements IModelGeometry<InnerModelGeometry>
+public class ExtremeModelGeometry implements IModelGeometry<ExtremeModelGeometry>
 {
 	private final boolean pulse;
 	private final Material backgroundMaterial;
@@ -30,7 +30,7 @@ public class InnerModelGeometry implements IModelGeometry<InnerModelGeometry>
 	private ResourceLocation parentLocation;
 	private UnbakedModel innerModel;
 
-	public InnerModelGeometry(ResourceLocation parentLocation, boolean pulse, Material backgroundMaterial, int colour, int size)
+	public ExtremeModelGeometry(ResourceLocation parentLocation, boolean pulse, Material backgroundMaterial, int colour, int size)
 	{
 		this.parentLocation = parentLocation;
 		this.backgroundMaterial = backgroundMaterial;
@@ -66,9 +66,9 @@ public class InnerModelGeometry implements IModelGeometry<InnerModelGeometry>
 	}
 
 
-	public static class Loader implements IModelLoader<InnerModelGeometry>
+	public static class Loader implements IModelLoader<ExtremeModelGeometry>
 	{
-		public static final Loader INSTANCE = new InnerModelGeometry.Loader();
+		public static final Loader INSTANCE = new ExtremeModelGeometry.Loader();
 
 		@Override
 		public void onResourceManagerReload(ResourceManager resourceManager)
@@ -77,7 +77,7 @@ public class InnerModelGeometry implements IModelGeometry<InnerModelGeometry>
 		}
 
 		@Override
-		public InnerModelGeometry read(JsonDeserializationContext deserializationContext, JsonObject modelContents)
+		public ExtremeModelGeometry read(JsonDeserializationContext deserializationContext, JsonObject modelContents)
 		{
 			final String parent = modelContents.get("parent").getAsString();
 			final ResourceLocation parentLocation = new ResourceLocation(parent);
@@ -98,7 +98,7 @@ public class InnerModelGeometry implements IModelGeometry<InnerModelGeometry>
 				if (background.has("colour")) colour = background.get("colour").getAsInt();
 				if (background.has("size")) size = background.get("size").getAsInt();
 			}
-			return new InnerModelGeometry(parentLocation, pulse, back, colour, size);
+			return new ExtremeModelGeometry(parentLocation, pulse, back, colour, size);
 		}
 
 		private static Either<Material, String> parseTextureLocationOrReference(String pName)

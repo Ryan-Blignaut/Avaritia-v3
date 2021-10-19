@@ -1,5 +1,5 @@
 {
-  "loader": "avaritia:inner-model",
+  "loader": "avaritia:extreme",
   "parent": "avaritia:item/extreme_ingot_original",
   "pulse": true,
   "background": {

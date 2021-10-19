@@ -11,12 +11,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import thesilverecho.avaritia.client.model.loader.CosmicModelGeometry;
-import thesilverecho.avaritia.client.model.loader.InnerModelGeometry;
-import thesilverecho.avaritia.client.model.loader.LayeredModelTest;
+import thesilverecho.avaritia.client.model.loader.ExtremeModelGeometry;
 import thesilverecho.avaritia.client.shader.ModShaders;
 import thesilverecho.avaritia.common.Avaritia;
-
-import java.util.HashMap;
 
 @Mod.EventBusSubscriber(modid = Avaritia.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientSetup
@@ -67,9 +64,8 @@ public class ClientSetup
 	@SubscribeEvent
 	public static void registerCustomModelLoaders(ModelRegistryEvent event)
 	{
-		ModelLoaderRegistry.registerLoader(new ResourceLocation(Avaritia.MOD_ID, "super"), CosmicModelGeometry.Loader.INSTANCE);
-		ModelLoaderRegistry.registerLoader(new ResourceLocation(Avaritia.MOD_ID, "inner-model"), InnerModelGeometry.Loader.INSTANCE);
-		ModelLoaderRegistry.registerLoader(new ResourceLocation(Avaritia.MOD_ID, "layered"), LayeredModelTest.Loader.INSTANCE);
+		ModelLoaderRegistry.registerLoader(new ResourceLocation(Avaritia.MOD_ID, "extreme"), ExtremeModelGeometry.Loader.INSTANCE);
+		ModelLoaderRegistry.registerLoader(new ResourceLocation(Avaritia.MOD_ID, "cosmic"), CosmicModelGeometry.Loader.INSTANCE);
 	}
 
 	@SubscribeEvent
@@ -77,21 +73,10 @@ public class ClientSetup
 	{
 		if (!event.getMap().location().equals(InventoryMenu.BLOCK_ATLAS))
 			return;
-		LOCS.forEach((s, resourceLocation) -> event.addSprite(resourceLocation));
-
 		/*for (int i = 0; i < 10; i++)
 		{
 			event.addSprite(new ResourceLocation(Avaritia.MOD_ID, "shader/cosmic_" + i));
 		}*/
 	}
 
-//	public static final FloatBuffer COSMIC_UVS = BufferUtils.createFloatBuffer(4 * 10);
-//	public static final ArrayList<TextureAtlasSprite> COSMIC_LOCATIONS = new ArrayList<>(10);
-
-	private final static HashMap<String, ResourceLocation> LOCS = new HashMap<>();
-
-	public static void registerSprite(ResourceLocation name, String location)
-	{
-		LOCS.put(location, name);
-	}
 }
