@@ -90,7 +90,6 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
-
             // Recommended logging data for a userdev environment
             // The markers can be added/remove as needed separated by commas.
             // "SCAN": For mods scan.
@@ -104,10 +103,11 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'avaritia', '--all', '--existing', file('src/main/resources/'), '--existing', file('src/generated/resources/'), '--output', file('src/generated/resources/')
+//            duplicatesStrategy DuplicatesStrategy.WARN
 
             mods {
-                examplemod {
+                avaritia {
                     source sourceSets.main
                 }
             }

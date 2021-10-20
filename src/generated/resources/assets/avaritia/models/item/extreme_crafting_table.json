@@ -1,6 +1,6 @@
 {
   "loader": "avaritia:extreme",
-  "parent": "avaritia:item/extreme_ingot_original",
+  "parent": "avaritia:item/extreme_crafting_table_original",
   "pulse": true,
   "background": {
     "texture": "avaritia:halo/halo128",
