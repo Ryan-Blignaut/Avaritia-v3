@@ -15,7 +15,7 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.client.model.IModelConfiguration;
 import net.minecraftforge.client.model.IModelLoader;
 import net.minecraftforge.client.model.geometry.IModelGeometry;
-import thesilverecho.avaritia.client.model.InnerBakedModel;
+import thesilverecho.avaritia.client.model.ExtremeBakedModel;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -26,17 +26,19 @@ public class ExtremeModelGeometry implements IModelGeometry<ExtremeModelGeometry
 {
 	private final boolean pulse;
 	private final Material backgroundMaterial;
-	private final int colour, size;
+	private final int colour, size, lightBeamColour, lightBeamCount;
 	private ResourceLocation parentLocation;
 	private UnbakedModel innerModel;
 
-	public ExtremeModelGeometry(ResourceLocation parentLocation, boolean pulse, Material backgroundMaterial, int colour, int size)
+	public ExtremeModelGeometry(ResourceLocation parentLocation, boolean pulse, Material backgroundMaterial, int colour, int size, int lightBeamColour, int lightBeamCount)
 	{
 		this.parentLocation = parentLocation;
 		this.backgroundMaterial = backgroundMaterial;
 		this.pulse = pulse;
 		this.colour = colour;
 		this.size = size;
+		this.lightBeamColour = lightBeamColour;
+		this.lightBeamCount = lightBeamCount;
 	}
 
 	@Override
@@ -44,7 +46,7 @@ public class ExtremeModelGeometry implements IModelGeometry<ExtremeModelGeometry
 	{
 		final TextureAtlasSprite backgroundTexture = spriteGetter.apply(backgroundMaterial);
 		final BakedModel innerBakedModel = this.innerModel.bake(bakery, spriteGetter, modelTransform, parentLocation);
-		return new InnerBakedModel(innerBakedModel, pulse, backgroundTexture, colour, size);
+		return new ExtremeBakedModel(innerBakedModel, pulse, backgroundTexture, colour, size, lightBeamColour, lightBeamCount);
 	}
 
 	@Override
@@ -98,7 +100,18 @@ public class ExtremeModelGeometry implements IModelGeometry<ExtremeModelGeometry
 				if (background.has("colour")) colour = background.get("colour").getAsInt();
 				if (background.has("size")) size = background.get("size").getAsInt();
 			}
-			return new ExtremeModelGeometry(parentLocation, pulse, back, colour, size);
+
+			int lightBeamColour = 0xE7FFFFFF;
+			int lightBeamCount = 0;
+
+			if (modelContents.has("light_beam"))
+			{
+				final JsonObject lightBeam = modelContents.getAsJsonObject("light_beam");
+				if (lightBeam.has("colour")) lightBeamColour = lightBeam.get("colour").getAsInt();
+				if (lightBeam.has("count")) lightBeamCount = lightBeam.get("count").getAsInt();
+			}
+
+			return new ExtremeModelGeometry(parentLocation, pulse, back, colour, size, lightBeamColour, lightBeamCount);
 		}
 
 		private static Either<Material, String> parseTextureLocationOrReference(String pName)

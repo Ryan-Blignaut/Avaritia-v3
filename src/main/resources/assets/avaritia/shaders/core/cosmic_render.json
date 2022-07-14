@@ -10,14 +10,15 @@
         "UV0"
     ],
     "samplers": [
-        { "name": "Sampler0" },
-        { "name": "Sampler1" }
+        { "name": "Sampler0" }
     ],
     "uniforms": [
         { "name": "ModelViewMat", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
         { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
-        { "name": "GameTime", "type": "float", "count": 1, "values": [ 0.0 ] },
+        { "name": "CosmicUVs", "type": "matrix2x2", "count": 40, "values": [ ] },
         { "name": "Time", "type": "float", "count": 1, "values": [0.0] },
-        { "name": "EndPortalLayers", "type": "int", "count": 1, "values": [ 15 ] }
+        { "name": "Pitch", "type": "float", "count": 1, "values": [0.0] },
+        { "name": "Yaw", "type": "float", "count": 1, "values": [0.0] },
+        { "name": "ExternalScale", "type": "float", "count": 1, "values": [0.0] }
     ]
 }

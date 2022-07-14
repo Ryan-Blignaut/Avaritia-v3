@@ -3,7 +3,7 @@ package thesilverecho.avaritia.common.init;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
 import thesilverecho.avaritia.common.tile.ExtremeCraftingTableTile;
 
 public class ModTiles

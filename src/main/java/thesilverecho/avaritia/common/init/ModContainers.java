@@ -2,8 +2,7 @@ package thesilverecho.avaritia.common.init;
 
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraftforge.fmllegacy.RegistryObject;
-import thesilverecho.avaritia.common.container.ExtremeCraftingTableContainer;
+import net.minecraftforge.registries.RegistryObject;import thesilverecho.avaritia.common.container.ExtremeCraftingTableContainer;
 
 public class ModContainers
 {

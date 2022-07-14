@@ -1,7 +1,7 @@
 package thesilverecho.avaritia.common.init;
 
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
 import thesilverecho.avaritia.common.block.ExtremeCraftingTableBlock;
 
 import java.util.function.Supplier;

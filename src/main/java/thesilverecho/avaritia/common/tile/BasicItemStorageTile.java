@@ -35,17 +35,17 @@ public abstract class BasicItemStorageTile extends BlockEntity
 		return player.distanceToSqr(worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5) <= 64;
 	}
 
-	@Override
-	public CompoundTag save(CompoundTag tag)
+	/*@Override
+	public CompoundTag saveWithFullMetadata(CompoundTag tag)
 	{
-		final CompoundTag save = super.save(tag);
+		final CompoundTag save = super.saveWithFullMetadata(tag);
 //		optionals.forEach(lazyOptional ->
 //		{
 //			save.put("test", lazyOptional.resolve().get().serializeNBT());
 //		});
 		save.put("storage", getInventory().serializeNBT());
 		return save;
-	}
+	}*/
 
 	@Override
 	public void load(CompoundTag tag)

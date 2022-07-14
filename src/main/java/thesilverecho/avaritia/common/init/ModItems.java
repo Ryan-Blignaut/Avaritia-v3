@@ -2,8 +2,7 @@ package thesilverecho.avaritia.common.init;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.fmllegacy.RegistryObject;
-import thesilverecho.avaritia.common.Avaritia;
+import net.minecraftforge.registries.RegistryObject;import thesilverecho.avaritia.common.Avaritia;
 import thesilverecho.avaritia.common.item.InfinitySword;
 import thesilverecho.avaritia.common.item.ResourceItem;
 

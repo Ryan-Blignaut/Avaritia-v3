@@ -6,8 +6,7 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.fmllegacy.RegistryObject;
-import thesilverecho.avaritia.common.Avaritia;
+import net.minecraftforge.registries.RegistryObject;import thesilverecho.avaritia.common.Avaritia;
 import thesilverecho.avaritia.common.init.ModItems;
 import thesilverecho.avaritia.datagen.builder.ExtremeItemTemplate;
 

@@ -10,10 +10,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.List;
 import java.util.Random;
 
-public record InnerBakedModel(BakedModel innerModel, boolean pulse, TextureAtlasSprite backgroundTexture,
-                              int colour,
-                              int size) implements BakedModel
+public abstract class InnerBakedModel implements BakedModel
 {
+	private final BakedModel innerModel;
+
+	public InnerBakedModel(BakedModel innerModel) {this.innerModel = innerModel;}
+
 	@Override
 	public List<BakedQuad> getQuads(final BlockState state, final Direction side, final Random rand)
 	{
@@ -60,6 +62,4 @@ public record InnerBakedModel(BakedModel innerModel, boolean pulse, TextureAtlas
 	{
 		return innerModel;
 	}
-
-
 }

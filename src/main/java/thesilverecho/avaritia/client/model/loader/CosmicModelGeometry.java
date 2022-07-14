@@ -89,8 +89,12 @@ public class CosmicModelGeometry implements IModelGeometry<CosmicModelGeometry>
 	 * */
 	public static ImmutableList<BakedQuad> getQuadsForSprite(int tintIndex, TextureAtlasSprite sprite, Transformation transform)
 	{
+
+
+		return ItemLayerModel.getQuadsForSprite(tintIndex, sprite, transform);
+
 //		TODO: fix the topology as all parts of the mesh are now internally connected.
-		ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
+		/*ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
 
 		int uMax = sprite.getWidth();
 		int vMax = sprite.getHeight();
@@ -122,7 +126,7 @@ public class CosmicModelGeometry implements IModelGeometry<CosmicModelGeometry>
 				0, 1, 8.5f / 16f, sprite.getU0(), sprite.getV0()
 		));
 
-		return builder.build();
+		return builder.build();*/
 	}
 
 	private static BakedQuad buildSideQuad(Transformation transform, Direction side, int tintIndex, TextureAtlasSprite sprite, int u, int v, int size)
